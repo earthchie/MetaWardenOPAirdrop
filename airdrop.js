@@ -40,8 +40,8 @@ async function main() {
             console.log("CSV file successfully processed.");
             console.log(`Total recipients: ${recipients.length}`);
             
-            const recipientChunks = splitIntoChunks(recipients, process.env.LENGT_PER_TRANSACTION);
-            const amountChunks = splitIntoChunks(amounts, process.env.LENGT_PER_TRANSACTION);
+            const recipientChunks = splitIntoChunks(recipients, process.env.TRANSACTION_CHUNK_SIZE);
+            const amountChunks = splitIntoChunks(amounts, process.env.TRANSACTION_CHUNK_SIZE);
 
             try {
                 for (let i = 0; i < recipientChunks.length; i++) {
