@@ -26,7 +26,7 @@ async function main() {
     fs.createReadStream("airdrop_list.csv")
         .pipe(csv())
         .on("data", (row) => {
-            const address = row.address;
+            const address = row[Object.keys(row)[0]]; // for some reason row.address doesn't work
             const amount = row.amount; 
 
             if (ethers.utils.isAddress(address) && !isNaN(amount)) {
