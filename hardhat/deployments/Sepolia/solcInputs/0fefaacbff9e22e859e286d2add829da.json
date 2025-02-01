@@ -1,0 +1,36 @@
+{
+  "language": "Solidity",
+  "sources": {
+    "contracts/MetaWardenOPAirdrop.sol": {
+      "content": "// SPDX-License-Identifier: MIT\r\n\r\n// ((/*,                                                                    ,*((/,.\r\n// &&@@&&%#/*.                                                        .*(#&&@@@@%. \r\n// &&@@@@@@@&%(.                                                    ,#%&@@@@@@@@%. \r\n// &&@@@@@@@@@&&(,                                                ,#&@@@@@@@@@@@%. \r\n// &&@@@@@@@@@@@&&/.                                            .(&&@@@@@@@@@@@@%. \r\n// %&@@@@@@@@@@@@@&(,                                          *#&@@@@@@@@@@@@@@%. \r\n// #&@@@@@@@@@@@@@@&#*                                       .*#@@@@@@@@@@@@@@@&#. \r\n// #&@@@@@@@@@@@@@@@@#.                                      ,%&@@@@@@@@@@@@@@@&#. \r\n// #&@@@@@@@@@@@@@@@@%(,                                    ,(&@@@@@@@@@@@@@@@@&#. \r\n// #&@@@@@@@@@@@@@@@@&&/                                   .(%&@@@@@@@@@@@@@@@@&#. \r\n// #%@@@@@@@@@@@@@@@@@@(.               ,(/,.              .#&@@@@@@@@@@@@@@@@@&#. \r\n// (%@@@@@@@@@@@@@@@@@@#*.            ./%&&&/.            .*%@@@@@@@@@@@@@@@@@@%(. \r\n// (%@@@@@@@@@@@@@@@@@@#*.           *#&@@@@&%*.          .*%@@@@@@@@@@@@@@@@@@%(. \r\n// (%@@@@@@@@@@@@@@@@@@#/.         ./#@@@@@@@@%(.         ./%@@@@@@@@@@@@@@@@@@%(. \r\n// (%@@@@@@@@@@@@@@@@@@#/.        ./&@@@@@@@@@@&(*        ,/%@@@@@@@@@@@@@@@@@@%(. \r\n// (%@@@@@@@@@@@@@@@@@@%/.       ,#&@@@@@@@@@@@@&#,.      ,/%@@@@@@@@@@@@@@@@@@%(. \r\n// /%@@@@@@@@@@@@@@@@@@#/.      *(&@@@@@@@@@@@@@@&&*      ./%@@@@@@@@@@@@@@@@@&%(. \r\n// /%@@@@@@@@@@@@@@@@@@#/.     .(&@@@@@@@@@@@@@@@@@#*.    ,/%@@@@@@@@@@@@@@@@@&#/. \r\n// ,#@@@@@@@@@@@@@@@@@@#/.    ./%@@@@@@@@@@@@@@@@@@&#,    ,/%@@@@@@@@@@@@@@@@@&(,  \r\n//  /%&@@@@@@@@@@@@@@@@#/.    *#&@@@@@@@@@@@@@@@@@@@&*    ,/%@@@@@@@@@@@@@@@@&%*   \r\n//  .*#&@@@@@@@@@@@@@@@#/.    /&&@@@@@@@@@@@@@@@@@@@&/.   ,/%@@@@@@@@@@@@@@@@#*.   \r\n//    ,(&@@@@@@@@@@@@@@#/.    /@@@@@@@@@@@@@@@@@@@@@&(,   ,/%@@@@@@@@@@@@@@%(,     \r\n//     .*(&&@@@@@@@@@@@#/.    /&&@@@@@@@@@@@@@@@@@@@&/,   ,/%@@@@@@@@@@@&%/,       \r\n//        ./%&@@@@@@@@@#/.    *#&@@@@@@@@@@@@@@@@@@@%*    ,/%@@@@@@@@@&%*          \r\n//           ,/#%&&@@@@#/.     ,#&@@@@@@@@@@@@@@@@@#/.    ,/%@@@@&&%(/,            \r\n//               ./#&@@%/.      ,/&@@@@@@@@@@@@@@%(,      ,/%@@%#*.                \r\n//                   .,,,         ,/%&@@@@@@@@&%(*        .,,,.                    \r\n//                                   ,/%&@@@%(*.                                   \r\n//  .,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,**((/*,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,\r\n//                                                                                                                                                                                                      \r\n\r\npragma solidity ^0.8.26;\r\n\r\ninterface IERC20 {\r\n    function transfer(address recipient, uint256 amount) external returns (bool);\r\n}\r\n\r\ncontract MetaWardenOPAirdrop {\r\n    IERC20 public immutable token;\r\n\r\n    constructor() {\r\n        token = IERC20(0x4200000000000000000000000000000000000042);\r\n    }\r\n\r\n    function airdrop(address[] calldata recipients, uint256[] calldata amounts) external {\r\n        require(recipients.length == amounts.length, \"Recipients and amounts length mismatch\");\r\n\r\n        for (uint256 i = 0; i < recipients.length; i++) {\r\n            address recipient = recipients[i];\r\n            uint256 amount = amounts[i];\r\n\r\n            require(recipient != address(0), \"Invalid recipient address\");\r\n            require(!isContract(recipient), \"Recipient cannot be a contract\");\r\n            require(amount > 0, \"Amount must be greater than zero\");\r\n\r\n            token.transfer(recipient, amount);\r\n        }\r\n    }\r\n\r\n    function isContract(address account) internal view returns (bool) {\r\n        uint256 size;\r\n        assembly {\r\n            size := extcodesize(account)\r\n        }\r\n        return size > 0;\r\n    }\r\n}\r\n"
+    }
+  },
+  "settings": {
+    "optimizer": {
+      "enabled": true,
+      "runs": 200
+    },
+    "evmVersion": "paris",
+    "outputSelection": {
+      "*": {
+        "*": [
+          "abi",
+          "evm.bytecode",
+          "evm.deployedBytecode",
+          "evm.methodIdentifiers",
+          "metadata",
+          "devdoc",
+          "userdoc",
+          "storageLayout",
+          "evm.gasEstimates"
+        ],
+        "": [
+          "ast"
+        ]
+      }
+    },
+    "metadata": {
+      "useLiteralContent": true
+    }
+  }
+}

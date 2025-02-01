@@ -34,7 +34,7 @@
 pragma solidity ^0.8.26;
 
 interface IERC20 {
-    function transfer(address recipient, uint256 amount) external returns (bool);
+    function transferFrom(address from, address recipient, uint256 amount) external returns (bool);
 }
 
 contract MetaWardenOPAirdrop {
@@ -55,7 +55,7 @@ contract MetaWardenOPAirdrop {
             require(!isContract(recipient), "Recipient cannot be a contract");
             require(amount > 0, "Amount must be greater than zero");
 
-            token.transfer(recipient, amount);
+            token.transferFrom(msg.sender, recipient, amount);
         }
     }
 
